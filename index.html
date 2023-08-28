@@ -141,15 +141,16 @@
 				<div class="w3-center">
 					<h2>Abstract</h2>
 				</div>
-				<p>Fast, reliable shape reconstruction is an essential ingredient in many computer vision applications.  Neural Radiance Fields demonstrated that photorealistic novel view synthesis is within reach, but was gated by performance requirements for fast reconstruction of real scenes and objects. Several  recent approaches have built on alternative shape representations, in particular, 3D Gaussians. We develop extensions to these renderers, such as integrating differentiable optical flow, exporting watertight meshes and rendering per-ray normals. Additionally, we show how two of the recent methods are interoperable with each other. These reconstructions are quick, robust, and easily performed on GPU or CPU.</p>
+				<p>Fast, reliable shape reconstruction is an essential ingredient in many computer vision applications.  Neural Radiance Fields demonstrated that photorealistic novel view synthesis is within reach, but was gated by performance requirements for fast reconstruction of real scenes and objects. Several  recent approaches have built on alternative shape representations, in particular, 3D Gaussians. We develop extensions to prior work on <a href="https://leonidk.github.io/fuzzy-metaballs/">differentiable rendering with 3D Gaussians</a>, such as integrating differentiable optical flow, exporting watertight meshes and rendering per-ray normals. Additionally, we show how two of the recent methods are interoperable with each other. These reconstructions are quick, robust, and easily performed on GPU or CPU.</p>
 				<hr>
 
 
 
 				<div class="w3-center">
 					<h2>Reconstruction from Videos</h2>
+					<p>Additional examples of optimizing a shape reconstruction from a <a href="https://ai.meta.com/datasets/CO3D-dataset/">CO3D</a> video sequence. Using forty 3D Gaussians.</p>
+
 				</div>
-				<p><strong>CO3D Reconstructions</strong>: gradient descent optimization over a 400 parameter model. </p>
 				<video controls style="width:100%" autoplay loop playsinline muted>
 					<source src="videos/skateboard_245_26182_52130.mp4" type="video/mp4">
 					Sorry, your browser doesn't support embedded videos.
@@ -174,13 +175,13 @@
 				<hr>
 				<div class="w3-center">
 					<h2>Differentiable Optical Flow Benefits</h2>
-					Here we show how the addition of differentiable optical flow can aid the reconstruction to produce more accurate shapes. 
+					<p>The addition of differentiable optical flow can aid the reconstruction to produce more accurate shapes. </p>
 					<img src="images/flow.jpg" style="width:50%">
 				</div>
 
 				<div class="w3-center">
-					<h2>Exporting a mesh reconstructed with <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">3D Gaussian Splatting</a></h2>
-					Both Fuzzy Metaballs and 3D Gaussian Splatting use 3D Gaussians as the underlying shape representations.
+					<h2>Exporting a mesh reconstructed with 3D Gaussian Splatting</h2>
+					<p>Both <a href="https://leonidk.github.io/fuzzy-metaballs/">Fuzzy Metaballs</a> and <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">3D Gaussian Splatting</a> use 3D Gaussians as the underlying shape representations. Here we show a 3DGS reconstruction of the ficus tree, exported via our mesh exporting pipeline.</p>
 					<img src="images/3dgs.jpg" style="width:100%">
 				</div>
 
