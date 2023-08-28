@@ -1,0 +1,11 @@
+numpy
+matplotlib
+scipy
+jax
+tqdm
+Pillow
+scikit-image
+pyrender
+transforms3d
+optax
+open3d
