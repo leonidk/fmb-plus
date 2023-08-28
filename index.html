@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Flexible Techniques for Differentiable Rendering with 3D Gaussians</title>
+	<meta charset="UTF-8">
+	<meta name="google-site-verification" content="a8ozfdrKssOiKi8c000dPFDpjUot0z2Rp9zC6Sbqk8k" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<!-- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		html,
+		body,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: "Titillium Web", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		}
+
+		< !-- .cite {
+			background: #f0f0f0;
+			padding: 10px;
+			font-size: 18px
+		}
+
+		-->.cite {
+			padding: 0px;
+			background: #ffffff;
+			font-size: 18px
+		}
+
+		.card {
+			border: 1px solid #ccc
+		}
+
+		img {
+			margin-bottom: -6px;
+		}
+
+		p {
+			font-size: 18px;
+		}
+
+		a {
+			text-decoration: none;
+			color: #2196F3;
+		}
+
+		.layered-paper-big {
+			/* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+			box-shadow:
+				0px 0px 1px 1px rgba(0, 0, 0, 0.35),
+				/* The top layer shadow */
+				5px 5px 0 0px #fff,
+				/* The second layer */
+				5px 5px 1px 1px rgba(0, 0, 0, 0.35),
+				/* The second layer shadow */
+				10px 10px 0 0px #fff,
+				/* The third layer */
+				10px 10px 1px 1px rgba(0, 0, 0, 0.35),
+				/* The third layer shadow */
+				15px 15px 0 0px #fff,
+				/* The fourth layer */
+				15px 15px 1px 1px rgba(0, 0, 0, 0.35),
+				/* The fourth layer shadow */
+				20px 20px 0 0px #fff,
+				/* The fifth layer */
+				20px 20px 1px 1px rgba(0, 0, 0, 0.35),
+				/* The fifth layer shadow */
+				25px 25px 0 0px #fff,
+				/* The fifth layer */
+				25px 25px 1px 1px rgba(0, 0, 0, 0.35);
+			/* The fifth layer shadow */
+			margin-left: 10px;
+			margin-right: 60px;
+		}
+
+		table {
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+			border-collapse: collapse;
+		}
+
+		table> :is(thead, tbody)>tr> :is(th, td) {
+			padding: 3px;
+			text-align: center;
+		}
+
+		table>thead>tr> :is(th, td) {
+			border-top: 2px solid;
+			border-bottom: 1px solid;
+		}
+
+		table>tbody>tr:last-child> :is(th, td) {
+			border-bottom: 2px solid;
+		}
+
+		table>tbody {
+			border-top: 2px solid;
+			border-bottom: 1px solid;
+		}
+	</style>
+</head>
+
+<body class="w3-white">
+	<!-- Page Container -->
+	<div class="w3-content w3-margin-top w3-margin-bottom" style="max-width:960px;">
+
+		<!-- The Grid -->
+		<div class="w3-row-padding">
+
+			<!-- paper container -->
+			<div class="w3-display-container w3-row w3-white w3-margin-bottom">
+				<div class="w3-center">
+					<h1>Flexible Techniques for Differentiable Rendering with 3D Gaussians</h1>
+					<h5><a href="https://leonidk.com/">Leonid Keselman</a> and <a href="https://www.cs.cmu.edu/~hebert/">Martial Hebert</a></h5>
+					<h5><em>arXiv</em></h5>
+				</div>
+
+				<div class="w3-center">
+					<h3>[<a href="https://github.com/leonidk/fmb-plus">Code</a>]</h3>
+				</div>
+
+				<hr>
+				<div class="w3-display-container w3-row w3-white w3-margin-bottom w3-center">
+					<!--<img src="images/fig1.png" style="width:100%">-->
+
+					<video controls style="width:100%" autoplay loop playsinline muted>
+						<source src="videos/teddybear_34_1479_4753.mp4" type="video/mp4">
+						Sorry, your browser doesn't support embedded videos.
+					</video>
+					<p><strong>Shape Reconstruction</strong> from a short cell phone video, showing reconstructed masks.</p>
+
+				</div>
+				<hr>
+				<div class="w3-center">
+					<h2>Abstract</h2>
+				</div>
+				<p>Fast, reliable shape reconstruction is an essential ingredient in many computer vision applications.  Neural Radiance Fields demonstrated that photorealistic novel view synthesis is within reach, but was gated by performance requirements for fast reconstruction of real scenes and objects. Several  recent approaches have built on alternative shape representations, in particular, 3D Gaussians. We develop extensions to these renderers, such as integrating differentiable optical flow, exporting watertight meshes and rendering per-ray normals. Additionally, we show how two of the recent methods are interoperable with each other. These reconstructions are quick, robust, and easily performed on GPU or CPU.</p>
+				<hr>
+
+
+
+				<div class="w3-center">
+					<h2>Reconstruction from Videos</h2>
+				</div>
+				<p><strong>CO3D Reconstructions</strong>: gradient descent optimization over a 400 parameter model. </p>
+				<video controls style="width:100%" autoplay loop playsinline muted>
+					<source src="videos/skateboard_245_26182_52130.mp4" type="video/mp4">
+					Sorry, your browser doesn't support embedded videos.
+				</video>
+				<video controls style="width:100%" autoplay loop playsinline muted>
+					<source src="videos/motorcycle_613_98146_195503.mp4" type="video/mp4">
+					Sorry, your browser doesn't support embedded videos.
+				</video>
+
+				<hr>
+				<div class="w3-center">
+					<h2>Colored Mesh Exports</h2>
+					<p>Meshes can be exported and rendered in an external program like Blender. </p>
+					<img src="images/skate.jpg" style="width:19%">
+					<img src="images/car2.jpg" style="width:19%">
+					<img src="images/moto2.jpg" style="width:19%">
+					<img src="images/cake.jpg" style="width:19%">
+					<img src="images/teddy2.jpg" style="width:19%">
+				</div>
+
+
+				<hr>
+				<div class="w3-center">
+					<h2>Differentiable Optical Flow Benefits</h2>
+					Here we show how the addition of differentiable optical flow can aid the reconstruction to produce more accurate shapes. 
+					<img src="images/flow.jpg" style="width:50%">
+				</div>
+
+				<div class="w3-center">
+					<h2>Exporting a mesh reconstructed with <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">3D Gaussian Splatting</a></h2>
+					Both Fuzzy Metaballs and 3D Gaussian Splatting use 3D Gaussians as the underlying shape representations.
+					<img src="images/3dgs.jpg" style="width:100%">
+				</div>
+
+				<hr>
+				<div class="w3-row w3-margin" style="padding-bottom:2em">
+					<div class="w3-center">
+						<h2>Paper</h2>
+					</div>
+					<div class="w3-col s0 m1 l2" style="height:10px"></div>
+					<div class="w3-col s6 m3 l2">
+						<img class="layered-paper-big" src="images/page1.png" style="width:100%;min-height:200px; margin-right:3em">
+					</div>
+					<div class="w3-col s6 m7 l6" style="padding-left:5em">
+						<div class="cite">
+							Leonid Keselman and Martial Hebert
+							<i>Flexible Techniques for Differentiable Rendering with 3D Gaussians</i>
+							2023.
+						</div>
+						<h3>[<a href="bib.txt">bibtex</a>]</h3>
+					</div>
+					<div class="w3-col s0 m1 l2" style="height:10px"></div>
+				</div>
+				<hr>
+			</div>
+			<!-- end paper container -->
+
+		</div><!-- End Grid -->
+	</div><!-- End Page Container -->
+
+</body>
+
+</html>
