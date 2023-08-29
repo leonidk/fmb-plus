@@ -1,7 +1,9 @@
 
-@InProceedings{keselman2023fuzzyplus,
+@misc{keselman2023fuzzyplus,
     author    = {Leonid Keselman and Martial Hebert},
-    title     = {Flexible Techniques for Differentiable Rendering with 3D Gaussians},
-    booktitle = {Preprint},
+    title     = {{F}lexible {T}echniques for {D}ifferentiable {R}endering with {3D} {G}aussians},
     year      = {2023},
+    eprint    =  {2308.14737},
+    archivePrefix = {arXiv},
+    primaryClass = {cs.CV}
 }
