@@ -1,54 +1,12 @@
 import jax
 import jax.numpy as jnp
 
-def mrp_to_rot(vec):
-    vec_mag = vec @ vec
-    vec_mag_num = (1-vec_mag)
-    vec_mag_den = ((1+vec_mag)**2)
-    x,y,z = vec
-    K = jnp.array(
-           [[  0, -z,  y ],
-            [  z,  0, -x ],
-            [ -y,  x,  0 ]])
-    R1 = jnp.eye(3) - ( ((4*vec_mag_num)/vec_mag_den) * K) + ((8/vec_mag_den) * (K @ K))
-    R2 = jnp.eye(3)
+# this file implements most of https://arxiv.org/abs/2308.14737
+# this basically follows fm_render.py, but has a different blending function
+# the other file has more detailed comments.
 
-    Rest = jnp.where(vec_mag > 1e-12,R1,R2)
-    return Rest
-
-def axangle_to_rot(axangl):
-    scale = jnp.sqrt(axangl @ axangl)
-    vec = axangl/scale
-    x,y,z = vec
-    K = jnp.array(
-           [[  0, -z,  y ],
-            [  z,  0, -x ],
-            [ -y,  x,  0 ]])
-    ctheta = jnp.cos(scale)
-    stheta = jnp.sin(scale)
-    R1 = jnp.eye(3) + stheta*K + (1-ctheta)*(K @ K)
-    R2 = jnp.eye(3)
-    Rest = jnp.where(scale > 1e-12,R1.T, R2)
-    return Rest
-
-def quat_to_rot(q):
-    w, x, y, z = q
-    Nq = w*w + x*x + y*y + z*z
-
-    s = 2.0/Nq
-    X = x*s
-    Y = y*s
-    Z = z*s
-    wX = w*X; wY = w*Y; wZ = w*Z
-    xX = x*X; xY = x*Y; xZ = x*Z
-    yY = y*Y; yZ = y*Z; zZ = z*Z
-    R1 = jnp.array(
-           [[ 1.0-(yY+zZ), xY-wZ, xZ+wY ],
-            [ xY+wZ, 1.0-(xX+zZ), yZ-wX ],
-            [ xZ-wY, yZ+wX, 1.0-(xX+yY) ]])
-    R2 = jnp.eye(3)
-    return jnp.where(Nq > 1e-12,R1,R2)
-
+# contains various rotation conversions
+from util_render import *
 
 def render_func_rays(means, prec_full, weights_log, camera_starts_rays):
     prec = jnp.triu(prec_full)
@@ -89,16 +47,24 @@ def render_func_rays(means, prec_full, weights_log, camera_starts_rays):
     # compositing
     sample_density = jnp.exp(stds)  # simplier but splottier
     def sort_w(z,densities):
+        # get the order of the z values
         idxs = jnp.argsort(z,axis=0)
+        # sample the densities in z-order
         order_density = densities[idxs]
+        # integrate
         order_summed_density = jnp.cumsum(order_density)
+        # get "prior sum"
         order_prior_density =  order_summed_density - order_density
+        # compute expected alpha as final ray weight
         ea = 1 - jnp.exp(-order_summed_density[-1])
+        # resample the densities out of z-order, into original order
         prior_density = jnp.zeros_like(densities)
         prior_density = prior_density.at[idxs].set(order_prior_density)
+        # compute the transmission of current and prior, Max/NeRF style
         transmit = jnp.exp(-prior_density)
         wout = transmit * (1-jnp.exp(-densities))
-        return wout,ea
+        # return weight and total expected alpha
+        return wout, ea
     w,est_alpha= jax.vmap(sort_w)(zs.T,sample_density.T)
     w = w.T
 
